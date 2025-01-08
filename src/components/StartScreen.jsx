@@ -8,10 +8,10 @@ function StartScreen() {
       <div className="flex min-h-[80vh] w-full flex-col items-center justify-around gap-[20px] md:flex-row md:justify-between">
         <div className="w-full md:w-[50%]">
           <h1 className="my-[10px] text-2xl font-bold sm:text-3xl md:text-5xl">
-            <span className="mb-[10px] block font-thin">Welcome to the </span>
-            Frontend Quiz!
+            <span className="mb-[10px] block font-thin">Welcome to  </span>
+            L&D
           </h1>
-          <p className="text-left italic">Pick a subject to get started.</p>
+          <p className="text-left italic">Quiz</p>
         </div>
 
         <div className="flex w-full flex-col items-center gap-[20px] md:w-[50%] ">

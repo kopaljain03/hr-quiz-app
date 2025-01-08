@@ -1,23 +1,23 @@
-import { useQuestions } from "./context/QuestionsProvider";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import QuizApp from "./components/QuizApp";
+import HomeAvatars from "./components/HomeAvatars";
 import Header from "./components/Header";
-import StartScreen from "./components/StartScreen";
-import Question from "./components/Question";
-import FinishScreen from "./components/FinishScreen";
+import StoryPage from "./components/StoryPage";
+
 
 function App() {
-  const { status } = useQuestions();
-
   return (
     <div className="text-textColor">
-      <Header />
-
-      <div className="flex min-h-[calc(100vh-70px)] items-center justify-center">
-        {status === "pending" && <StartScreen />}
-
-        {status === "active" && <Question />}
-
-        {status === "finished" && <FinishScreen />}
-      </div>
+        <Header />
+    <BrowserRouter>
+      <Routes>
+        <Route path="/home" element={<HomeAvatars />}>
+          {" "}
+        </Route>
+        <Route path="/" element={<QuizApp />}></Route>
+        <Route path="/story" element={<StoryPage/>}></Route>
+      </Routes>
+    </BrowserRouter>
     </div>
   );
 }
