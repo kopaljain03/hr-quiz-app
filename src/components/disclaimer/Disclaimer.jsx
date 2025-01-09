@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+// import { useEffect, useRef } from "react";
 // "use client";
 
 // import { Carousel } from "flowbite-react";
@@ -29,10 +29,14 @@ import { useEffect, useRef } from "react";
 //   );
 // }
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Carousel } from "flowbite-react";
 import { div } from "motion/react-client";
 import { Link } from "react-router-dom";
+import WebFont from "webfontloader";
+import { useQuiz } from "../../context/QuizContext";
+
+// public\backgrounds\Background (1) crop.png
 
 const Disclaimer = () => {
   const cards = [
@@ -45,7 +49,15 @@ const Disclaimer = () => {
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isFading, setIsFading] = useState(false);
-  const [username, setuserName] = useState("");
+  const [usernameper, setuserNameper] = useState("");
+  const { username, setUsername } = useQuiz();
+  useEffect(() => {
+    WebFont.load({
+      google: {
+        families: ["Press Start 2P", "serif"],
+      },
+    });
+  }, []);
 
   const handleNext = () => {
     if (currentIndex < cards.length - 1) {
@@ -62,14 +74,23 @@ const Disclaimer = () => {
   };
 
   return (
-    <div>
+    <div
+      style={{
+        backgroundImage: "url('backgrounds/background_disclaimer.png')",
+        backgroundSize: "cover", // Makes the background image cover the whole div
+        backgroundPosition: "center", // Centers the background image
+        height: "100vh", // Adjust height as needed
+        width: "100%",
+      }}
+      className="bg-opacity-20"
+    >
       {" "}
-      <h1 class="flex items-center justify-center text-4xl font-extrabold text-white md:text-5xl lg:text-6xl">
+      <h1 class="flex items-center justify-center pt-16 text-4xl font-extrabold text-white md:text-5xl lg:text-7xl">
         Disclaimer
       </h1>
       <div className="mt-24 flex flex-col items-center justify-center">
         <div
-          className={` flex w-1/2 flex-col  rounded-md bg-gray-400 p-6 text-center text-lg font-bold shadow-md transition-opacity duration-700 ease-in-out ${
+          className={` flex w-[45%] flex-col  rounded-lg  bg-black bg-opacity-70 p-8 text-center text-lg font-bold shadow-md transition-opacity duration-700 ease-in-out ${
             isFading ? "opacity-0" : "opacity-100"
           }`}
         >
@@ -80,15 +101,15 @@ const Disclaimer = () => {
                 <input
                   type="text"
                   value={username}
-                  onChange={(e) => setuserName(e.target.value)}
+                  onChange={(e) => setUsername(e.target.value)}
                   placeholder="Enter your name"
                   className="w-full rounded-md border border-gray-300 p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
                 <div className="flex items-center justify-center">
-                  <Link to="/home">
+                  <Link to="/">
                     <button
                       type="submit"
-                      className="w-full rounded-md bg-green-600 py-2 text-white transition duration-300 hover:bg-green-700 "
+                      className="w-full rounded-md bg-white py-2 text-black transition duration-300 hover:bg-gray-100 "
                     >
                       Let's Go
                     </button>

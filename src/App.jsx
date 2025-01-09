@@ -8,7 +8,6 @@ import Disclaimer from "./components/disclaimer/Disclaimer";
 function App() {
   return (
     <div className="text-textColor">
-      <Header />
       <BrowserRouter>
         <Routes>
           <Route path="/home" element={<HomeAvatars />}>

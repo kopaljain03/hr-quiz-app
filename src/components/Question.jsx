@@ -1,90 +1,192 @@
-import React, { useEffect, useState } from "react";
+import { useQuestions } from "../context/QuestionsProvider";
+import { useQuiz } from "../context/QuizContext";
 import Button from "./Button";
 import Option from "./Option";
 import Progress from "./Progress";
-import data from "../data"; // Assuming this is the file where quizzes are stored
+import { quizData } from "../data";
+import Category1 from "./uiCategories/Category1";
+import Category2 from "./uiCategories/Category2";
+import Category3 from "./uiCategories/Category3";
+import { AiFillDollarCircle } from "react-icons/ai";
+import { GiRibbonMedal } from "react-icons/gi";
 
 function Question() {
-  const [level, setLevel] = useState(
-    () => JSON.parse(localStorage.getItem("level")) || 0,
-  );
-  const [questionIndex, setQuestionIndex] = useState(
-    () => JSON.parse(localStorage.getItem("questionIndex")) || 0,
-  );
-  const [points, setPoints] = useState(
-    () => JSON.parse(localStorage.getItem("points")) || 100,
-  );
-  const [answer, setAnswer] = useState(null);
-
-  const currentLevel = data.quizzes[level];
-  const currentQuestion = currentLevel.questions[questionIndex];
-  const questionsNum = currentLevel.questions.length;
-
-  // Update localStorage whenever points, questionIndex, or level changes
-  useEffect(() => {
-    localStorage.setItem("level", JSON.stringify(level));
-    localStorage.setItem("questionIndex", JSON.stringify(questionIndex));
-    localStorage.setItem("points", JSON.stringify(points));
-  }, [level, questionIndex, points]);
-
-  const handleOptionSelect = (optionPoints) => {
-    setPoints((prev) => prev + optionPoints);
-    setAnswer(optionPoints);
+  // const { dispatch, answer, index, questionsNum, secondRemaining } =
+  //   useQuestions();
+  const {
+    points,
+    setPoints,
+    questionIndex,
+    setQuestionIndex,
+    currentLevel,
+    setCurrentLevel,
+    levelEnded,
+    setLevelEnded,
+    username,
+  } = useQuiz();
+  const currentQuiz = quizData.quizzes[currentLevel]; // Current level data
+  const currentQuestion = currentQuiz.questions[questionIndex]; // Current question data
+  const handleOptionClick = (optionPoints) => {
+    setPoints(points + optionPoints); // Update points
   };
-
   const handleNextQuestion = () => {
-    if (questionIndex < questionsNum - 1) {
-      setQuestionIndex((prev) => prev + 1);
-      setAnswer(null);
-    } else if (level < data.quizzes.length - 1) {
-      setLevel((prev) => prev + 1);
-      setQuestionIndex(0);
-      setAnswer(null);
+    if (questionIndex < quizData.quizzes[currentLevel].questions.length - 1) {
+      setQuestionIndex(questionIndex + 1); // Move to the next question
     } else {
-      alert("Quiz Finished!");
-      localStorage.clear(); // Reset localStorage for a new attempt
+      setLevelEnded(true); // End the level
     }
   };
+  const handleNextLevel = () => {
+    if (currentLevel < quizData.quizzes.length - 1) {
+      setCurrentLevel(currentLevel + 1); // Move to the next level
+      setQuestionIndex(0); // Reset question index
+      setLevelEnded(false); // Reset levelEnded
+    } else {
+      alert("Quiz Completed! Final Points: " + points);
+    }
+  };
+  const renderCategoryComponent = () => {
+    switch (currentQuestion.Category) {
+      case 1:
+        return (
+          <Category1
+            question={currentQuestion.question}
+            options={currentQuestion.options}
+            points={currentQuestion.points}
+            handleOptionClick={handleOptionClick}
+            handleNextQuestion={handleNextQuestion}
+          />
+        );
+
+      case 2:
+        return (
+          <Category2
+            question={currentQuestion.question}
+            options={currentQuestion.options}
+            points={currentQuestion.points}
+            correctAnswers={currentQuestion.correctanswers} // Index of correct options
+            handleOptionClick={handleOptionClick}
+            handleNextQuestion={handleNextQuestion}
+          />
+        );
+
+      case 3:
+        return (
+          <Category3
+            question={currentQuestion.question}
+            options={currentQuestion.options}
+            points={currentQuestion.points}
+            correctAnswers={currentQuestion.correctanswers} // Index of correct options
+            handleOptionClick={handleOptionClick}
+            handleNextQuestion={handleNextQuestion}
+          />
+        );
+      default:
+        return <p>Category not defined.</p>;
+    }
+  };
+  if (levelEnded) {
+    return (
+      <div className="flex h-[500px] flex-col items-center ">
+        <div className="flex flex-col items-center justify-center pb-8">
+          <div className=" flex items-center justify-center lg:text-5xl">
+            <GiRibbonMedal className=" text-2xl text-yellow-300 lg:text-[200px]" />
+          </div>
+
+          <p>Badge Earned</p>
+        </div>
+        <h2 className="text-3xl">Congratulations, Level Completed!</h2>
+        <p className="pb-4 text-lg">{currentQuiz.message}</p>
+        <div className=" flex pr-8 lg:text-5xl">
+          <AiFillDollarCircle className=" text-2xl text-yellow-300 lg:text-5xl" />
+          <div className="">{points}</div>
+        </div>
+
+        <p>Medicoins Earned</p>
+        <button
+          class="mt-8 rounded-md border border-slate-300 px-4 py-2 text-center text-sm text-slate-600 shadow-sm transition-all hover:border-slate-800 hover:bg-slate-800 hover:text-white hover:shadow-lg focus:border-slate-800 focus:bg-slate-800 focus:text-white active:border-slate-800 active:bg-slate-800 active:text-white disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+          type="button"
+          onClick={handleNextLevel}
+        >
+          Next Level
+        </button>
+      </div>
+    );
+  }
 
   return (
-    <div className="container mx-auto px-[10px] md:w-[80%]">
-      <div className="flex min-h-[45vh] w-full flex-col items-center justify-around gap-[20px] p-[20px] md:flex-row md:justify-between">
-        <div className="flex h-[40vh] w-full flex-col items-start justify-center gap-[20px] md:w-[50%] md:justify-between">
-          <p className="text-left text-xl sm:text-2xl">
-            {currentQuestion.question}
-          </p>
-          <div className="flex w-full flex-wrap items-center justify-between gap-[10px]">
-            <Progress
-              index={questionIndex}
-              questionsNum={questionsNum}
-              answer={answer}
-            />
-          </div>
-        </div>
-
-        <div className="flex w-full flex-col items-center gap-[10px] text-sm sm:gap-[20px] sm:text-base md:w-[50%]">
-          {currentQuestion?.options?.map((option, i) => (
-            <Option
-              key={i}
-              option={option}
-              onClick={() => handleOptionSelect(currentQuestion.points[i])}
-              isSelected={answer === currentQuestion.points[i]}
-            />
-          ))}
-
-          {answer && (
-            <Button onClick={handleNextQuestion}>
-              {questionIndex < questionsNum - 1
-                ? "Next Question"
-                : level < data.quizzes.length - 1
-                  ? "Next Level"
-                  : "Finish"}
-            </Button>
-          )}
-        </div>
-      </div>
+    <div>
+      {renderCategoryComponent()}
+      {/* <div>{points}</div>
+      <button onClick={handleNextQuestion}>Next Question</button> */}
+      {/* {username} */}
     </div>
   );
 }
 
 export default Question;
+
+// return (
+// <div className="container mx-auto px-[10px] md:w-[80%]">
+//   <div className="flex min-h-[45vh] w-full flex-col items-center justify-around gap-[20px] p-[20px] md:flex-row md:justify-between">
+//     <div className="flex h-[40vh] w-full flex-col items-start justify-center gap-[20px] md:w-[50%] md:justify-between">
+//       <p className="text-left text-xl sm:text-2xl">
+//         <h2>Points: {points}</h2>
+//         {currentQuestion.question}
+//       </p>
+//       <div className="flex w-full flex-wrap items-center justify-between gap-[10px]">
+//         <Progress
+//           index={index}
+//           questionsNum={questionsNum}
+//           answer={answer}
+//         />
+//         <Timer dispatch={dispatch} secondRemaining={secondRemaining} />
+//       </div>
+//     </div>
+
+//     <div className="flex w-full flex-col  items-center gap-[10px] text-sm sm:gap-[20px] sm:text-base md:w-[50%]">
+//       {currentQuestion.options.map((option, index) => (
+//         <button
+//           className="option flex items-center justify-between gap-[5px]"
+//           onClick={() => handleOptionClick(currentQuestion.points[index])}
+//           // disabled={hasAnswered}
+//         >
+//           <h3>{option}</h3>
+
+//           {/* {answer && (
+//             <img
+//               src={
+//                 question.answer === option ? correctImage : incorrectImage
+//               }
+//               alt=""
+//               className="w-[20px]"
+//             />
+//           )} */}
+//         </button>
+//       ))}
+//       {/* {currentQuestion?.options?.map((q, i) => {
+//         return (
+//           <Option
+//             key={i}
+//             option={currentQuestion?.options[i]}
+//             dispatch={dispatch}
+//             answer={answer}
+//             question={currentQuestion}
+//           />
+//         );
+//       })} */}
+
+//       {/* {answer && index < questionsNum - 1 ? (
+//         <Button onClick={() => dispatch({ type: "nextQuestion" })}>
+//           Next Question
+//         </Button>
+//       ) : null}
+
+//       {answer && index === questionsNum - 1 ? (
+//         <Button onClick={() => dispatch({ type: "finish" })}>Finish</Button>
+//       ) : null} */}
+//       <button onClick={handleNextQuestion}>Next Question</button>
+//     </div>
+//   </div>
+// </div>
+// );
