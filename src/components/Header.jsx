@@ -3,9 +3,10 @@ import ToggleDarkModeBtn from "./ToggleDarkModeBtn";
 import { quizData } from "../data";
 import { useQuiz } from "../context/QuizContext";
 import { AiFillDollarCircle } from "react-icons/ai";
+import { GiRibbonMedal } from "react-icons/gi";
 
 function Header() {
-  const { points, currentLevel, levelEnded, setLevelEnded } = useQuiz();
+  const { points, currentLevel, levelEnded, setLevelEnded, badge } = useQuiz();
   const currentQuiz = quizData.quizzes[currentLevel]; // Current level data
 
   return (
@@ -18,9 +19,13 @@ function Header() {
             </h3>
           )}
         </div>
+        <div className="ml-auto flex pr-4 lg:text-xl">
+          <GiRibbonMedal className=" text-2xl text-yellow-300 lg:text-3xl" />
+          <div className="pl-1">{badge}</div>
+        </div>{" "}
         <div className="ml-auto flex pr-8 lg:text-xl">
           <AiFillDollarCircle className=" text-2xl text-yellow-300 lg:text-3xl" />
-          <div className="pl-2">{points}</div>
+          <div className="pl-1">{points}</div>
         </div>{" "}
         {/* This will push the points to the rightmost corner */}
       </div>

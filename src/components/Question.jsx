@@ -9,6 +9,8 @@ import Category2 from "./uiCategories/Category2";
 import Category3 from "./uiCategories/Category3";
 import { AiFillDollarCircle } from "react-icons/ai";
 import { GiRibbonMedal } from "react-icons/gi";
+import { useEffect } from "react";
+import * as XLSX from "xlsx";
 
 function Question() {
   // const { dispatch, answer, index, questionsNum, secondRemaining } =
@@ -22,6 +24,8 @@ function Question() {
     setCurrentLevel,
     levelEnded,
     setLevelEnded,
+    badge,
+    setBadge,
     username,
   } = useQuiz();
   const currentQuiz = quizData.quizzes[currentLevel]; // Current level data
@@ -42,9 +46,24 @@ function Question() {
       setQuestionIndex(0); // Reset question index
       setLevelEnded(false); // Reset levelEnded
     } else {
+      const data = [{ Name: username, Badge: badge, Points: points }];
+      const worksheet = XLSX.utils.json_to_sheet(data);
+
+      // Create a workbook and append the worksheet
+      const workbook = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
+
+      // Export the workbook to an Excel file
+      XLSX.writeFile(workbook, "DataExport.xlsx");
       alert("Quiz Completed! Final Points: " + points);
     }
   };
+
+  useEffect(() => {
+    if (levelEnded) {
+      setBadge((prevBadge) => prevBadge + 1);
+    }
+  }, [levelEnded]);
   const renderCategoryComponent = () => {
     switch (currentQuestion.Category) {
       case 1:
