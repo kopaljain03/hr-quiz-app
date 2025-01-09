@@ -1,30 +1,26 @@
 export const quizData = {
   quizzes: [
     {
-      title: "SET 1",
+      level: "Level 1",
+      title: "Identification",
       icon: "/images/icon-accessibility.svg",
       questions: [
         {
-          question: "who do you think you are",
+          question:
+            "Which could be a sign of distress that you can observe in Sara?",
           options: [
-            "1",
-            "2",
-            "3",
-            "4",
+            "avoid social activities",
+            "persistent sadness",
+            "excessive worry ",
+            "perceive",
           ],
-          answer: "3",
+          points: [+10, +10, -10, -10],
         },
         {
-          question:
-            " HOW is the weather today in pune",
-            options: [
-              "1",
-              "2",
-              "3",
-              "4",
-            ],
-            answer: "1",
-          },
+          question: " HOW is the weather today in pune",
+          options: ["1", "2", "3", "4"],
+          answer: "1",
+        },
       ],
     },
     {

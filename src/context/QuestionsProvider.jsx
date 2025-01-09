@@ -1,5 +1,6 @@
 import { createContext, useContext, useReducer } from "react";
 import { quizData } from "../data";
+import { whoNeedsHelp } from "../whoneedshelp";
 
 const QuestionsContext = createContext();
 
@@ -9,7 +10,7 @@ const initialState = {
   topicNumber: null,
   answer: null,
   index: 0,
-  points: 0,
+  points: 100,
   secondRemaining: 10 * 30,
 };
 
@@ -25,11 +26,14 @@ function reducer(state, action) {
       const question = state.questions[state.topicNumber].questions.at(
         state.index,
       );
+      console.log(action);
       return {
         ...state,
         answer: action.payload,
         points:
-          action.payload === question.answer ? state.points + 1 : state.points,
+          action.payload === question.answer
+            ? state.points + question.points
+            : state.points,
       };
 
     case "nextQuestion":
