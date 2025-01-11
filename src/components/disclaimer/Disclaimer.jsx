@@ -37,7 +37,9 @@ import WebFont from "webfontloader";
 import { useQuiz } from "../../context/QuizContext";
 import database from "../../config/configuration";
 import { collection, addDoc } from "firebase/firestore";
-
+import "./style.css";
+import { ToastContainer, toast } from "react-toastify"; // Import Toastify
+import "react-toastify/dist/ReactToastify.css"; // Toastify styles
 import { getDatabase, ref, push } from "firebase/database";
 
 // public\backgrounds\Background (1) crop.png
@@ -70,12 +72,19 @@ const Disclaimer = () => {
       setTimeout(() => {
         setCurrentIndex((prevIndex) => prevIndex + 1); // Update card
         setIsFading(false); // Reset fade-out
-      }, 700); // Match the duration of the fade-out animation
+      }, 500); // Match the duration of the fade-out animation
     }
   };
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     console.log(username);
+    if (username === "") {
+      toast.error("Enter your name please!", {
+        position: "top-center",
+        autoClose: 3000, // 3 seconds
+      });
+      return;
+    }
 
     try {
       const database = getDatabase(); // Initialize the database
@@ -94,60 +103,53 @@ const Disclaimer = () => {
   };
 
   return (
-    <div
-      style={{
-        backgroundImage: "url('backgrounds/background_disclaimer.png')",
-        backgroundSize: "cover", // Makes the background image cover the whole div
-        backgroundPosition: "center", // Centers the background image
-        height: "100vh", // Adjust height as needed
-        width: "100%",
-      }}
-      className="bg-opacity-20"
-    >
-      {" "}
-      <h1 class="flex items-center justify-center pt-16 text-4xl font-extrabold text-white md:text-5xl lg:text-7xl">
-        Disclaimer
-      </h1>
-      <div className="mt-24 flex flex-col items-center justify-center">
-        <div
-          className={` flex w-[45%] flex-col  rounded-lg  bg-black bg-opacity-70 p-8 text-center text-lg font-bold shadow-md transition-opacity duration-700 ease-in-out ${
-            isFading ? "opacity-0" : "opacity-100"
-          }`}
-        >
-          {cards[currentIndex]}
-          {currentIndex === cards.length - 1 && (
-            <div class="">
-              <form onSubmit={handleFormSubmit} className="mt-4 space-y-4">
-                <input
-                  type="text"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
-                  placeholder="Enter your name"
-                  className="w-full rounded-md border border-gray-300 p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                />
-                <div className="flex items-center justify-center">
-                  <button
-                    type="submit"
-                    className="w-full rounded-md bg-white py-2 text-black transition duration-300 hover:bg-gray-100 "
-                    onClick={() => handleFormSubmit()}
-                  >
-                    Let's Go
-                  </button>
-                </div>
-              </form>
-            </div>
+    <div className="bg-container bg-opacity-20">
+      <ToastContainer></ToastContainer>
+      <div className="lg:w-[75%]">
+        <h1 class="text-head font-bebas flex items-center justify-center pt-16 text-6xl  md:text-5xl lg:text-9xl">
+          Disclaimer
+        </h1>
+        <div className="font-openSans mt-16 flex flex-col items-center justify-center leading-loose">
+          <div
+            className={` bg-hover flex w-[90%]  flex-col  rounded-3xl  bg-opacity-70 p-8 text-center text-lg font-bold text-white shadow-md transition-opacity duration-700 ease-in-out lg:w-[50%]  lg:text-xl ${
+              isFading ? "opacity-0" : "opacity-100"
+            }`}
+          >
+            {cards[currentIndex]}
+            {currentIndex === cards.length - 1 && (
+              <div class="">
+                <form onSubmit={handleFormSubmit} className=" mt-4 space-y-4">
+                  <input
+                    type="text"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                    placeholder="Enter your name"
+                    className="focus:ring-hover text-para w-full rounded-md border border-gray-300 p-3 focus:outline-none focus:ring-2"
+                  />
+                  <div className="flex items-center justify-center">
+                    <button
+                      type="submit"
+                      className="bg-head hover:bg-hover rounded-md p-4 text-white transition duration-300"
+                      onClick={() => handleFormSubmit()}
+                    >
+                      Let's Go
+                    </button>
+                  </div>
+                </form>
+              </div>
+            )}
+          </div>
+
+          {/* Next Button */}
+          {currentIndex < cards.length - 1 && (
+            <button
+              onClick={handleNext}
+              className="bg-head hover:bg-hover mt-6 rounded-md px-4 py-2 text-white transition duration-300"
+            >
+              Next
+            </button>
           )}
         </div>
-
-        {/* Next Button */}
-        {currentIndex < cards.length - 1 && (
-          <button
-            onClick={handleNext}
-            className="mt-6 rounded-md bg-purple px-4 py-2 text-white transition duration-300 hover:bg-purple"
-          >
-            Next
-          </button>
-        )}
       </div>
     </div>
   );

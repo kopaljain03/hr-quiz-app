@@ -17,6 +17,14 @@ export default {
         textColor: "var(--color-grey-600)",
 
         purple: "var(--purple)",
+        head: "#5A3D36",
+        card: "#f8e5d0",
+        para: "#6B4F41",
+        hover: "#9a6a5d",
+      },
+      fontFamily: {
+        bebas: ['"Bebas Neue"', "sans-serif"], // Add Bebas Neue font
+        openSans: ['"Open Sans"', "sans-serif"],
       },
     },
   },
