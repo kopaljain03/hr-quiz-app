@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { FaCheckCircle, FaTimesCircle } from "react-icons/fa"; // Import icons
 import { ToastContainer, toast } from "react-toastify"; // Import Toastify
 import "react-toastify/dist/ReactToastify.css"; // Toastify styles
+import { FaYoutube } from "react-icons/fa"; // Import icons
 
 const Category2 = ({
   question,
@@ -10,15 +11,30 @@ const Category2 = ({
   correctAnswers,
   handleOptionClick,
   handleNextQuestion,
+  ytVideos,
 }) => {
   const [selectedOptions, setSelectedOptions] = useState([]);
   const [submitted, setSubmitted] = useState(false);
+  const [clickedVideos, setClickedVideos] = useState([]);
+  const [modalVideo, setModalVideo] = useState(null); // Track the currently opened video in the modal
+
   useEffect(() => {
     setSelectedOptions([]); // Reset selected option
-    setSubmitted(false); // Reset submission state
+    setSubmitted(false);
+    setClickedVideos([]); // Reset submission state
+    setModalVideo(null); // Close modal when question changes
   }, [question]); // Trigger reset when question changes
 
   // Toggle selection for an option
+  const handleVideoClick = (index) => {
+    if (!clickedVideos.includes(index)) {
+      setClickedVideos((prevClicked) => [...prevClicked, index]);
+    }
+    setModalVideo(ytVideos[index]);
+  };
+  const handleCloseModal = () => {
+    setModalVideo(null);
+  };
   const handleOptionSelect = (index) => {
     if (!submitted) {
       setSelectedOptions(
@@ -39,6 +55,17 @@ const Category2 = ({
           position: "top-center",
           autoClose: 3000, // 3 seconds
         });
+        return;
+      }
+      if (clickedVideos.length !== ytVideos.length) {
+        // Alert if not all videos have been clicked
+        toast.error(
+          "You gotta click all the video links first. They're waiting for you! 🎥",
+          {
+            position: "top-center",
+            autoClose: 3000, // 3 seconds
+          },
+        );
         return;
       }
       const totalPoints = selectedOptions.reduce(
@@ -76,6 +103,22 @@ const Category2 = ({
                 >
                   {option}
                 </button>
+                {ytVideos[index] && (
+                  <button
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-red-600"
+                    onClick={() => handleVideoClick(index)}
+                  >
+                    <FaYoutube
+                      className={`text-[27px] ${
+                        clickedVideos.includes(index)
+                          ? "text-red-300" // Green if clicked
+                          : "hover:text-3xl hover:text-red-800" // Red hover if not clicked
+                      }`}
+                    />
+                  </button>
+                )}
                 {submitted &&
                   (correctAnswers.includes(index) ? (
                     <FaCheckCircle className="text-xl text-green-500" />
@@ -107,6 +150,24 @@ const Category2 = ({
           </div>
         </div>
       </div>
+      {modalVideo && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-75">
+          <div className="relative h-[80%] w-[90%] max-w-4xl">
+            <iframe
+              src={modalVideo}
+              allow="autoplay; encrypted-media"
+              allowFullScreen
+              className="h-full w-full rounded-lg"
+            ></iframe>
+            <button
+              className="absolute right-2 top-2 text-2xl text-white hover:text-red-500"
+              onClick={handleCloseModal}
+            >
+              ✖
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

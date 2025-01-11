@@ -152,6 +152,7 @@ function Question() {
             correctAnswers={currentQuestion.correctanswers} // Index of correct options
             handleOptionClick={handleOptionClick}
             handleNextQuestion={handleNextQuestion}
+            ytVideos={currentQuestion.ytVideos}
           />
         );
 
