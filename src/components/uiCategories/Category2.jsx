@@ -83,8 +83,10 @@ const Category2 = ({
       <div className="container mx-auto px-[10px] md:w-[80%]">
         <div className="flex min-h-[45vh] w-full flex-col items-center justify-around gap-[20px] p-[20px] md:flex-row md:justify-between">
           {/* Question and Points Display */}
-          <div className="flex h-[40vh] w-full flex-col items-start justify-center gap-[20px] md:w-[50%] md:justify-between">
-            <p className="text-left text-xl sm:text-2xl">{question}</p>
+          <div className="flex h-[20vh] w-full flex-col items-start justify-center gap-[20px]  md:w-[50%] md:justify-between lg:h-[40vh] ">
+            <p className="text-left font-openSans text-lg font-bold text-head lg:text-[27px]">
+              {question}
+            </p>
           </div>
 
           {/* Options */}
@@ -92,8 +94,10 @@ const Category2 = ({
             {options.map((option, index) => (
               <div
                 key={index}
-                className={`flex w-full items-center justify-between gap-4 rounded-lg border px-4 py-2 ${
-                  selectedOptions.includes(index) ? "bg-gray-700" : "" // Highlight selected option
+                className={` flex w-full items-center justify-between gap-4 rounded-lg border bg-[#D78859] bg-opacity-90 px-4 py-2 text-white hover:bg-[#f8996d] ${
+                  selectedOptions.includes(index)
+                    ? "bg-[#333333]  bg-opacity-100"
+                    : "" // Highlight selected option
                 }`}
               >
                 <button
@@ -111,7 +115,7 @@ const Category2 = ({
                     onClick={() => handleVideoClick(index)}
                   >
                     <FaYoutube
-                      className={`text-[27px] ${
+                      className={`text-[24px] lg:text-[27px] ${
                         clickedVideos.includes(index)
                           ? "text-red-300" // Green if clicked
                           : "hover:text-3xl hover:text-red-800" // Red hover if not clicked
@@ -131,7 +135,7 @@ const Category2 = ({
             {/* Submit Button */}
             {!submitted && (
               <button
-                className="hover:bg-purple-700 mt-4 rounded-lg bg-purple px-6 py-2 text-white"
+                className="mt-4 rounded-lg bg-[#333333] px-6 py-2 text-lg text-white hover:bg-[#f8996d]"
                 onClick={handleSubmit}
               >
                 Submit
@@ -141,7 +145,7 @@ const Category2 = ({
             {/* Next Question Button */}
             {submitted && (
               <button
-                className="mt-4 rounded-lg bg-green-500 px-6 py-2 text-white hover:bg-green-700"
+                className="mt-4 rounded-lg bg-[#4C7C58] px-6 py-2 text-white hover:bg-green-700"
                 onClick={handleNextQuestion}
               >
                 Next Question
