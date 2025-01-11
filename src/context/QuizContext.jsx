@@ -11,6 +11,7 @@ export function QuizProvider({ children }) {
   const [levelEnded, setLevelEnded] = useState(false); // Track if the level has ended
   const [username, setUsername] = useState("");
   const [badge, setBadge] = useState(0);
+  const [userkey, setuserkey] = useState("");
   return (
     <QuizContext.Provider
       value={{
@@ -26,6 +27,8 @@ export function QuizProvider({ children }) {
         setUsername,
         badge,
         setBadge,
+        userkey,
+        setuserkey,
       }}
     >
       {children}

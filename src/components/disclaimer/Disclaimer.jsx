@@ -31,10 +31,14 @@
 
 import React, { useState, useEffect } from "react";
 import { Carousel } from "flowbite-react";
-import { div } from "motion/react-client";
-import { Link } from "react-router-dom";
+import { div, nav } from "motion/react-client";
+import { useNavigate } from "react-router-dom";
 import WebFont from "webfontloader";
 import { useQuiz } from "../../context/QuizContext";
+import database from "../../config/configuration";
+import { collection, addDoc } from "firebase/firestore";
+
+import { getDatabase, ref, push } from "firebase/database";
 
 // public\backgrounds\Background (1) crop.png
 
@@ -50,7 +54,8 @@ const Disclaimer = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isFading, setIsFading] = useState(false);
   const [usernameper, setuserNameper] = useState("");
-  const { username, setUsername } = useQuiz();
+  const { username, setUsername, userkey, setuserkey } = useQuiz();
+  const navigate = useNavigate();
   useEffect(() => {
     WebFont.load({
       google: {
@@ -68,9 +73,24 @@ const Disclaimer = () => {
       }, 700); // Match the duration of the fade-out animation
     }
   };
-  const handleFormSubmit = (e) => {
+  const handleFormSubmit = async (e) => {
     e.preventDefault();
-    alert(`Hello, ${username}! Let's go!`);
+    console.log(username);
+
+    try {
+      const database = getDatabase(); // Initialize the database
+      const usersRef = ref(database, "users"); // Create a reference to the "users" node
+
+      const newUserRef = await push(usersRef, {
+        // Push a new user into the "users" node
+        Name: username,
+      });
+      setuserkey(newUserRef.key);
+      console.log("Data stored with key: ", newUserRef.key);
+      navigate("/"); // Log the unique key of the new data
+    } catch (e) {
+      console.error("Error writing to database: ", e);
+    }
   };
 
   return (
@@ -106,14 +126,13 @@ const Disclaimer = () => {
                   className="w-full rounded-md border border-gray-300 p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
                 <div className="flex items-center justify-center">
-                  <Link to="/">
-                    <button
-                      type="submit"
-                      className="w-full rounded-md bg-white py-2 text-black transition duration-300 hover:bg-gray-100 "
-                    >
-                      Let's Go
-                    </button>
-                  </Link>
+                  <button
+                    type="submit"
+                    className="w-full rounded-md bg-white py-2 text-black transition duration-300 hover:bg-gray-100 "
+                    onClick={() => handleFormSubmit()}
+                  >
+                    Let's Go
+                  </button>
                 </div>
               </form>
             </div>

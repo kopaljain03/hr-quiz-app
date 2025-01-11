@@ -11,6 +11,8 @@ import { AiFillDollarCircle } from "react-icons/ai";
 import { GiRibbonMedal } from "react-icons/gi";
 import { useEffect } from "react";
 import * as XLSX from "xlsx";
+import { useNavigate } from "react-router-dom";
+import { getDatabase, ref, get, update } from "firebase/database";
 
 function Question() {
   // const { dispatch, answer, index, questionsNum, secondRemaining } =
@@ -27,15 +29,52 @@ function Question() {
     badge,
     setBadge,
     username,
+    userkey,
   } = useQuiz();
   const currentQuiz = quizData.quizzes[currentLevel]; // Current level data
   const currentQuestion = currentQuiz.questions[questionIndex]; // Current question data
+  const navigate = useNavigate();
+
+  const addPointstodb = async (pptionpoints) => {
+    console.log("here i am");
+    try {
+      const database = getDatabase(); // Initialize the database
+      const userRef = ref(database, `users/${userkey}`); // Reference to the specific user by key
+
+      // Fetch the user's current data
+      const snapshot = await get(userRef);
+      var queslvl = currentLevel + 1;
+      var quesind = questionIndex + 1;
+      var questionandlevel = "Level:" + queslvl + " Question:" + quesind;
+      if (snapshot.exists()) {
+        const userData = snapshot.val(); // Get the user's data as an object
+
+        // Check if the questionandlevel key already exists
+        const currentPoints = userData[questionandlevel] || 0; // Default to 0 if it doesn't exist
+
+        // Update the value (add to existing points or create a new entry)
+        const newPoints = currentPoints + pptionpoints;
+        await update(userRef, { [questionandlevel]: newPoints });
+
+        console.log(
+          `User with key ${userkey} updated with ${questionandlevel}: ${newPoints}`,
+        );
+      } else {
+        console.error(`User with key ${userkey} does not exist.`);
+      }
+    } catch (e) {
+      console.error("Error updating user level: ", e);
+    }
+  };
+
   const handleOptionClick = (optionPoints) => {
     setPoints(points + optionPoints); // Update points
+    addPointstodb(optionPoints);
   };
   const handleNextQuestion = () => {
     if (questionIndex < quizData.quizzes[currentLevel].questions.length - 1) {
-      setQuestionIndex(questionIndex + 1); // Move to the next question
+      setQuestionIndex(questionIndex + 1);
+      // Move to the next question
     } else {
       setLevelEnded(true); // End the level
     }
@@ -64,6 +103,11 @@ function Question() {
       setBadge((prevBadge) => prevBadge + 1);
     }
   }, [levelEnded]);
+  useEffect(() => {
+    if (username === "") {
+      navigate("/disclaimer");
+    }
+  }, []);
   const renderCategoryComponent = () => {
     switch (currentQuestion.Category) {
       case 1:
