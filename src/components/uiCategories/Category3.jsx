@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { FaCheckCircle, FaTimesCircle } from "react-icons/fa"; // Import icons
+import { ToastContainer, toast } from "react-toastify"; // Import Toastify
+import "react-toastify/dist/ReactToastify.css"; // Toastify styles
 
 const Category3 = ({
   question,
@@ -26,6 +28,14 @@ const Category3 = ({
   // Handle Submit
   const handleSubmit = () => {
     if (!submitted) {
+      if (selectedOption === null) {
+        // Alert if no options are selected
+        toast.error("Nope, submitting nothing? Not on my watch. Pick one! 👀", {
+          position: "top-center",
+          autoClose: 3000, // 3 seconds
+        });
+        return;
+      }
       const totalPoints = points[selectedOption] || 0; // Add points of selected option
       handleOptionClick(totalPoints); // Update global points
       setSubmitted(true); // Mark as submitted
@@ -34,6 +44,7 @@ const Category3 = ({
 
   return (
     <div>
+      <ToastContainer />
       <div className="container mx-auto px-[10px] md:w-[80%]">
         <div className="flex min-h-[45vh] w-full flex-col items-center justify-around gap-[20px] p-[20px] md:flex-row md:justify-between">
           {/* Question and Points Display */}

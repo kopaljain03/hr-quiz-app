@@ -67,6 +67,26 @@ function Question() {
     }
   };
 
+  const addFinalPointstodb = async () => {
+    console.log("here i am");
+    try {
+      const database = getDatabase(); // Initialize the database
+      const userRef = ref(database, `users/${userkey}`); // Reference to the specific user by key
+
+      // Fetch the user's current data
+      const snapshot = await get(userRef);
+      if (snapshot.exists()) {
+        await update(userRef, { Final_Points: points });
+
+        console.log(`User with key ${userkey} updated with : ${points}`);
+      } else {
+        console.error(`User with key ${userkey} does not exist.`);
+      }
+    } catch (e) {
+      console.error("Error updating user level: ", e);
+    }
+  };
+
   const handleOptionClick = (optionPoints) => {
     setPoints(points + optionPoints); // Update points
     addPointstodb(optionPoints);
@@ -85,16 +105,18 @@ function Question() {
       setQuestionIndex(0); // Reset question index
       setLevelEnded(false); // Reset levelEnded
     } else {
-      const data = [{ Name: username, Badge: badge, Points: points }];
-      const worksheet = XLSX.utils.json_to_sheet(data);
+      addFinalPointstodb();
+      // const data = [{ Name: username, Badge: badge, Points: points }];
+      // const worksheet = XLSX.utils.json_to_sheet(data);
 
-      // Create a workbook and append the worksheet
-      const workbook = XLSX.utils.book_new();
-      XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
+      // // Create a workbook and append the worksheet
+      // const workbook = XLSX.utils.book_new();
+      // XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
 
-      // Export the workbook to an Excel file
-      XLSX.writeFile(workbook, "DataExport.xlsx");
+      // // Export the workbook to an Excel file
+      // XLSX.writeFile(workbook, "DataExport.xlsx");
       alert("Quiz Completed! Final Points: " + points);
+      //insert in db
     }
   };
 

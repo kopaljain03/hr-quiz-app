@@ -35,7 +35,7 @@ const Category2 = ({
     if (!submitted) {
       if (selectedOptions.length === 0) {
         // Alert if no options are selected
-        toast.error("No options selected. Please choose at least one option.", {
+        toast.error("Nope, submitting nothing? Not on my watch. Pick one! 👀", {
           position: "top-center",
           autoClose: 3000, // 3 seconds
         });
