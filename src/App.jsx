@@ -5,6 +5,7 @@ import Header from "./components/Header";
 import StoryPage from "./components/StoryPage";
 import Disclaimer from "./components/disclaimer/Disclaimer";
 import FeedbackForm from "./components/FeedbackForm";
+import FinishScreen from "./components/FinishScreen";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           <Route path="/" element={<QuizApp />}></Route>
           <Route path="/story" element={<StoryPage />}></Route>
           <Route path="/feedback" element={<FeedbackForm />}></Route>
+          <Route path="/finish" element={<FinishScreen />}></Route>
         </Routes>
       </BrowserRouter>
     </div>

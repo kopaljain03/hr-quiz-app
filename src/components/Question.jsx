@@ -127,7 +127,7 @@ function Question() {
 
       // // Export the workbook to an Excel file
       // XLSX.writeFile(workbook, "DataExport.xlsx");
-      alert("Quiz Completed! Final Points: " + points);
+      navigate("/finish");
       //insert in db
     }
   };

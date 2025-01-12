@@ -1,36 +1,88 @@
-import { useQuestions } from "../context/QuestionsProvider";
-import Button from "./Button";
+import React from "react";
+import { AiFillDollarCircle } from "react-icons/ai";
+import { useNavigate } from "react-router-dom";
+import { useQuiz } from "../context/QuizContext";
 
-function FinishScreen() {
-  const { points, questionsNum, dispatch, topicTitle, topicIcon } =
-    useQuestions();
+const LevelEnded = () => {
+  const { points } = useQuiz();
+  const navigate = useNavigate();
 
   return (
-    <div className="container mx-auto  px-[10px] md:w-[80%]">
-      <div className="ga-[20px] flex min-h-[80vh] w-full flex-col items-center justify-around md:flex-row md:justify-between">
-        <div className="w-full md:w-[50%]">
-          <h1 className="my-[10px] text-2xl font-bold sm:text-3xl md:text-5xl">
-            <span className="mb-[10px] block font-thin">Quiz completed </span>
-            You scored...
-          </h1>
-        </div>
-
-        <div className="flex w-full flex-col items-center gap-[20px] md:w-[50%] ">
-          <div className="option flex flex-col gap-[10px]">
-            <div className="flex items-center gap-[10px]">
-              <img src={topicIcon} alt="topic Icon" />
-              <h3>{topicTitle}</h3>
+    <div
+      style={{
+        backgroundImage: `url("backgrounds/bg_fiish.png")`, // Background Image
+        backgroundSize: "cover", // Ensures the image covers the whole div
+        backgroundPosition: "center", // Centers the background image
+        height: "100vh", // Full height
+        width: "100%", // Full width
+      }}
+      className="grid items-center lg:grid-cols-2"
+    >
+      {/* Left Half for Content */}
+      <div className="flex h-full items-center justify-center">
+        <div
+          className="w-full max-w-lg rounded-3xl bg-opacity-90 p-6"
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+            height: "auto",
+          }}
+        >
+          <div className="relative flex text-lg font-bold text-white lg:text-2xl">
+            <div className="flex items-center">
+              <iframe
+                src="https://giphy.com/embed/1wX5TJZPqVw3HhyDYn"
+                width="60"
+                height="60"
+                style={{ marginRight: "8px" }}
+                frameBorder="0"
+                className="giphy-embed"
+                allowFullScreen
+                title="Confetti Left"
+              ></iframe>
+              <span className="text-center text-4xl text-head">
+                Congratulations, Game Completed !
+              </span>
+              <iframe
+                src="https://giphy.com/embed/1wX5TJZPqVw3HhyDYn"
+                width="60"
+                height="60"
+                style={{ marginLeft: "8px" }}
+                className="giphy-embed"
+                allowFullScreen
+                title="Confetti Right"
+              ></iframe>
             </div>
-            <h2 className="text-5xl md:text-8xl">{points}</h2>
-            <p>out of {questionsNum}</p>
           </div>
-          <Button onClick={() => dispatch({ type: "restart" })}>
-            Restart Quiz!
-          </Button>
+
+          <p className="pb-4 text-xl text-para lg:text-2xl">
+            You successfully helped Sarita
+          </p>
+
+          <div className="flex pr-8 text-2xl lg:text-5xl">
+            <AiFillDollarCircle className="text-3xl text-yellow-300 lg:text-5xl" />
+            <div className="font-bold text-head">{points}</div>
+          </div>
+
+          <p className="text-para">Final Medicoins</p>
+          <button
+            className="mt-4 rounded-lg bg-[#f8996d] px-6 py-2 text-lg font-bold text-white hover:bg-para"
+            type="button"
+            onClick={() => {
+              navigate("/feedback");
+            }}
+          >
+            Give your feedback
+          </button>
         </div>
       </div>
+
+      {/* Empty Right Half */}
+      <div className="hidden lg:block"></div>
     </div>
   );
-}
+};
 
-export default FinishScreen;
+export default LevelEnded;

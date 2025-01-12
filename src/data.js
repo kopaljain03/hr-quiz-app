@@ -58,7 +58,7 @@ export const quizData = {
       questions: [
         {
           question:
-            "you notice Saritah having a panic attack. what is the first thing you should do?",
+            "you notice Sarita having a panic attack. what is the first thing you should do?",
           options: [
             "Call an ambulance immediately.",
             "sit with them and encourage slow breathing.",
@@ -80,7 +80,7 @@ export const quizData = {
         },
         {
           question:
-            "Later that day, in a meeting you see Saritah suddenly breathing rapidly sweating and hypernatural out of anxiety.what among the following can you use to come her down ",
+            "Later that day, in a meeting you see Sarita suddenly breathing rapidly sweating and hypernatural out of anxiety.what among the following can you use to come her down ",
           options: [
             "54321 technique",
             "hydration and posture",
@@ -126,7 +126,7 @@ export const quizData = {
         },
         {
           question:
-            "Now when you and Saritah are talking: Saritah shares that she feels helpless and agitated. What will you respond?",
+            "Now when you and Sarita are talking: Sarita shares that she feels helpless and agitated. What will you respond?",
           options: [
             "You will give advice and share personal experience.",
             "You will listen to them and calm them down.", // Correct option
@@ -137,7 +137,7 @@ export const quizData = {
         },
         {
           question:
-            "Now that you have identified, responded, and communicated about Saritah's mental well-being, you still find her overwhelmed, burnt out, and undergoing frequent outbursts resulting in high absenteeism. What will be your next step?",
+            "Now that you have identified, responded, and communicated about Sarita's mental well-being, you still find her overwhelmed, burnt out, and undergoing frequent outbursts resulting in high absenteeism. What will be your next step?",
           options: [
             "Help them find the best resources.", // Correct option
             "Suggest they take a vacation.",

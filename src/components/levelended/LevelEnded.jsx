@@ -16,9 +16,31 @@ const LevelEnded = ({ currentQuiz, points, handleNextLevel }) => {
 
         <p className="text-white lg:text-xl">Badge Earned</p>
       </div>
-      <h2 className="text-lg font-bold text-white lg:text-2xl">
-        🎉Congratulations, Level Completed!🎉
-      </h2>
+
+      <div className="relative flex items-center justify-center text-lg font-bold text-white lg:text-2xl">
+        <div className="flex items-center">
+          <iframe
+            src="https://giphy.com/embed/1wX5TJZPqVw3HhyDYn"
+            width="40"
+            height="40"
+            style={{ marginRight: "8px" }}
+            frameBorder="0"
+            className="giphy-embed"
+            allowFullScreen
+            title="Confetti Left"
+          ></iframe>
+          <span className="text-center">Congratulations, Level Completed!</span>
+          <iframe
+            src="https://giphy.com/embed/1wX5TJZPqVw3HhyDYn"
+            width="40"
+            height="40"
+            style={{ marginLeft: "8px" }}
+            className="giphy-embed"
+            allowFullScreen
+            title="Confetti Right"
+          ></iframe>
+        </div>
+      </div>
       <p className="pb-4 text-center text-sm text-card lg:text-base">
         {currentQuiz.message}
       </p>
