@@ -9,10 +9,12 @@ import Category2 from "./uiCategories/Category2";
 import Category3 from "./uiCategories/Category3";
 import { AiFillDollarCircle } from "react-icons/ai";
 import { GiRibbonMedal } from "react-icons/gi";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import * as XLSX from "xlsx";
 import { useNavigate } from "react-router-dom";
 import { getDatabase, ref, get, update } from "firebase/database";
+import LevelEnded from "./levelended/LevelEnded";
+import { motion, AnimatePresence } from "framer-motion"; // Import Framer Motion
 
 function Question() {
   // const { dispatch, answer, index, questionsNum, secondRemaining } =
@@ -31,6 +33,7 @@ function Question() {
     username,
     userkey,
   } = useQuiz();
+  const [isVisible, setIsVisible] = useState(true);
   const currentQuiz = quizData.quizzes[currentLevel]; // Current level data
   const currentQuestion = currentQuiz.questions[questionIndex]; // Current question data
   const navigate = useNavigate();
@@ -92,12 +95,21 @@ function Question() {
     addPointstodb(optionPoints);
   };
   const handleNextQuestion = () => {
-    if (questionIndex < quizData.quizzes[currentLevel].questions.length - 1) {
-      setQuestionIndex(questionIndex + 1);
-      // Move to the next question
-    } else {
-      setLevelEnded(true); // End the level
-    }
+    setIsVisible(false);
+    // if (questionIndex < quizData.quizzes[currentLevel].questions.length - 1) {
+    //   setQuestionIndex(questionIndex + 1);
+    //   // Move to the next question
+    // } else {
+    //   setLevelEnded(true); // End the level
+    // }
+    setTimeout(() => {
+      if (questionIndex < quizData.quizzes[currentLevel].questions.length - 1) {
+        setQuestionIndex(questionIndex + 1); // Move to next question
+      } else {
+        setLevelEnded(true); // End the level
+      }
+      setIsVisible(true); // Show the new question
+    }, 300); // Wait for the exit animation to complete
   };
   const handleNextLevel = () => {
     if (currentLevel < quizData.quizzes.length - 1) {
@@ -173,36 +185,29 @@ function Question() {
   };
   if (levelEnded) {
     return (
-      <div className="flex h-[500px] flex-col items-center ">
-        <div className="flex flex-col items-center justify-center pb-8">
-          <div className=" flex items-center justify-center lg:text-5xl">
-            <GiRibbonMedal className=" text-2xl text-yellow-300 lg:text-[200px]" />
-          </div>
-
-          <p>Badge Earned</p>
-        </div>
-        <h2 className="text-3xl">Congratulations, Level Completed!</h2>
-        <p className="pb-4 text-lg">{currentQuiz.message}</p>
-        <div className=" flex pr-8 lg:text-5xl">
-          <AiFillDollarCircle className=" text-2xl text-yellow-300 lg:text-5xl" />
-          <div className="">{points}</div>
-        </div>
-
-        <p>Medicoins Earned</p>
-        <button
-          class="mt-8 rounded-md border border-slate-300 px-4 py-2 text-center text-sm text-slate-600 shadow-sm transition-all hover:border-slate-800 hover:bg-slate-800 hover:text-white hover:shadow-lg focus:border-slate-800 focus:bg-slate-800 focus:text-white active:border-slate-800 active:bg-slate-800 active:text-white disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
-          type="button"
-          onClick={handleNextLevel}
-        >
-          Next Level
-        </button>
-      </div>
+      <LevelEnded
+        currentQuiz={currentQuiz}
+        points={points}
+        handleNextLevel={handleNextLevel}
+      />
     );
   }
 
   return (
     <div>
-      {renderCategoryComponent()}
+      <AnimatePresence initial={false}>
+        {isVisible ? (
+          <motion.div
+            initial={{ opacity: 0, scale: 0 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0 }}
+            transition={{ duration: 0.3 }}
+            key="question-box"
+          >
+            {renderCategoryComponent()}
+          </motion.div>
+        ) : null}
+      </AnimatePresence>
       {/* <div>{points}</div>
       <button onClick={handleNextQuestion}>Next Question</button> */}
       {/* {username} */}

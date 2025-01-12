@@ -5,6 +5,7 @@ export const quizData = {
       title: "Identification",
       badge: 0,
       icon: "backgrounds/bg_l1_new.jpeg",
+      badgeicon: "badges/badge_l1.jpeg",
       message: "you have successfully identified Sara to be in distress.",
       questions: [
         {
@@ -52,6 +53,7 @@ export const quizData = {
       title: "Responding to crisis",
       badge: 1,
       icon: "backgrounds/bg_l2_new.png",
+      badgeicon: "badges/badge_l2.png",
       message: "you have successfully responded to crisis",
       questions: [
         {
@@ -108,6 +110,7 @@ export const quizData = {
       title: "Communication Technique",
       badge: 2,
       icon: "backgrounds/bg_l3_new.png",
+      badgeicon: "badges/badge_l3.png",
       message: "",
       questions: [
         {
@@ -150,6 +153,7 @@ export const quizData = {
       title: "Referring for Professional Help",
       badge: 3,
       icon: "backgrounds/bg_l4_new.png",
+      badgeicon: "badges/badge_l4.jpg",
       message:
         "You have successfully guided someone to seek professional help.",
       questions: [

@@ -19,7 +19,10 @@ const QuizApp = () => {
     userkey,
   } = useQuiz();
   const backgroundImage =
-    quizData.quizzes[currentLevel]?.icon || "defaultBackground.png";
+    quizData.quizzes[currentLevel].questions[questionIndex].Category == 1
+      ? ""
+      : quizData.quizzes[currentLevel]?.icon;
+
   return (
     <div
       style={{
@@ -29,6 +32,7 @@ const QuizApp = () => {
         height: "100vh", // Full height
         width: "100%", // Full width
       }}
+      className="bg-[#ddb2aa]"
     >
       <Header />
       <div className="flex min-h-[calc(100vh-70px)] items-center justify-center">

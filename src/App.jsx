@@ -4,6 +4,7 @@ import HomeAvatars from "./components/HomeAvatars";
 import Header from "./components/Header";
 import StoryPage from "./components/StoryPage";
 import Disclaimer from "./components/disclaimer/Disclaimer";
+import FeedbackForm from "./components/FeedbackForm";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <Route path="/disclaimer" element={<Disclaimer />}></Route>
           <Route path="/" element={<QuizApp />}></Route>
           <Route path="/story" element={<StoryPage />}></Route>
+          <Route path="/feedback" element={<FeedbackForm />}></Route>
         </Routes>
       </BrowserRouter>
     </div>

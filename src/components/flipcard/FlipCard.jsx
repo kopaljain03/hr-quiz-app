@@ -257,7 +257,7 @@ const FlipCard = ({
 
           {/* Back Side */}
           <motion.div
-            className="back rounded-lg bg-purple text-center"
+            className="back rounded-lg bg-head text-center font-openSans"
             style={{
               position: "absolute",
               width: "100%",
@@ -278,7 +278,7 @@ const FlipCard = ({
         </motion.div>
       </motion.div>
       <button
-        class="mb-8 mt-4 rounded-full bg-purple px-4 py-2 font-bold text-white hover:bg-blue-700"
+        class="mb-8 mt-4 rounded-full  bg-[#333333] px-6 py-2 text-lg text-white hover:bg-[#f8996d]"
         key={idx}
         onClick={() => handleOptionClick(points[idx])}
       >
