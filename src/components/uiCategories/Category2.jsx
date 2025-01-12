@@ -96,8 +96,8 @@ const Category2 = ({
                 key={index}
                 className={` flex w-full items-center justify-between gap-4 rounded-lg border bg-[#D78859] bg-opacity-90 px-4 py-2 text-white hover:bg-[#f8996d] ${
                   selectedOptions.includes(index)
-                    ? "bg-[#333333]  bg-opacity-100"
-                    : "" // Highlight selected option
+                    ? "bg-opselect"
+                    : "bg-[#D78859]" // Highlight selected option
                 }`}
               >
                 <button
@@ -177,3 +177,14 @@ const Category2 = ({
 };
 
 export default Category2;
+
+{
+  /* <div
+                key={index}
+                className={` flex w-full items-center justify-between gap-4 rounded-lg border bg-[#D78859] bg-opacity-90 px-4 py-2 text-white hover:bg-[#f8996d] ${
+                  selectedOptions.includes(index)
+                    ? "bg-[#333333] bg-opacity-100"
+                    : "bg-[#D78859] bg-opacity-90" // Highlight selected option
+                }`}
+              ></div> */
+}

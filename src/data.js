@@ -4,7 +4,7 @@ export const quizData = {
       level: "Level 1",
       title: "Identification",
       badge: 0,
-      icon: "/images/icon-accessibility.svg",
+      icon: "backgrounds/bg_l1_new.jpeg",
       message: "you have successfully identified Sara to be in distress.",
       questions: [
         {
@@ -51,7 +51,7 @@ export const quizData = {
       level: "Level 2",
       title: "Responding to crisis",
       badge: 1,
-      icon: "/images/icon-accessibility.svg",
+      icon: "backgrounds/bg_l2_new.png",
       message: "you have successfully responded to crisis",
       questions: [
         {
@@ -107,7 +107,7 @@ export const quizData = {
       level: "Level 3",
       title: "Communication Technique",
       badge: 2,
-      icon: "/images/icon-communication.svg",
+      icon: "backgrounds/bg_l3_new.png",
       message: "",
       questions: [
         {
@@ -149,7 +149,7 @@ export const quizData = {
       level: "Level 4",
       title: "Referring for Professional Help",
       badge: 3,
-      icon: "/images/icon-help.svg",
+      icon: "backgrounds/bg_l4_new.png",
       message:
         "You have successfully guided someone to seek professional help.",
       questions: [

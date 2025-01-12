@@ -60,7 +60,7 @@ const Category3 = ({
               <div
                 key={index}
                 className={` flex w-full items-center justify-between gap-4 rounded-lg border bg-[#D78859] bg-opacity-90 px-4 py-2 text-white hover:bg-[#f8996d] ${
-                  selectedOption === index ? "bg-[#333333]  bg-opacity-100" : "" // Highlight selected option
+                  selectedOption === index ? "bg-opselect" : "bg-[#D78859]" // Highlight selected option
                 }`}
               >
                 <button

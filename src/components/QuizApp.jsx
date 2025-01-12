@@ -4,12 +4,26 @@ import StartScreen from "../components/StartScreen";
 import Question from "../components/Question";
 import FinishScreen from "../components/FinishScreen";
 import Header from "./Header";
+import { useQuiz } from "../context/QuizContext";
+import { quizData } from "../data";
 
 const QuizApp = () => {
+  const {
+    questionIndex,
+    setQuestionIndex,
+    currentLevel,
+    setCurrentLevel,
+    badge,
+    setBadge,
+    username,
+    userkey,
+  } = useQuiz();
+  const backgroundImage =
+    quizData.quizzes[currentLevel]?.icon || "defaultBackground.png";
   return (
     <div
       style={{
-        backgroundImage: "url('backgrounds/bg_l1_new.jpeg')",
+        backgroundImage: `url(${backgroundImage})`,
         backgroundSize: "cover", // Ensures the image covers the whole div
         backgroundPosition: "center", // Centers the background image
         height: "100vh", // Full height

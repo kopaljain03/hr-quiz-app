@@ -21,6 +21,7 @@ export default {
         card: "#f8e5d0",
         para: "#6B4F41",
         hover: "#9a6a5d",
+        opselect: "#333333",
       },
       fontFamily: {
         bebas: ['"Bebas Neue"', "sans-serif"], // Add Bebas Neue font
