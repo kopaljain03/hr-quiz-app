@@ -6,7 +6,7 @@ export const quizData = {
       badge: 0,
       icon: "backgrounds/bg_l1_new.jpeg",
       badgeicon: "badges/badge_l1.jpeg",
-      message: "you have successfully identified Sara to be in distress.",
+      message: "you have successfully identified Sarita to be in distress.",
       questions: [
         {
           question: "Who needs help ?",
@@ -31,7 +31,7 @@ export const quizData = {
         },
         {
           question:
-            "Which could be a sign of distress that you can observe in Sara?",
+            "Which could be a sign of distress that you can observe in Sarita?",
           options: [
             "avoid social activities",
             "persistent sadness",
@@ -58,7 +58,7 @@ export const quizData = {
       questions: [
         {
           question:
-            "you notice Sarah having a panic attack. what is the first thing you should do?",
+            "you notice Saritah having a panic attack. what is the first thing you should do?",
           options: [
             "Call an ambulance immediately.",
             "sit with them and encourage slow breathing.",
@@ -69,7 +69,7 @@ export const quizData = {
         },
         {
           question:
-            "Sara expresses feelings of wellness hopelessness and mentions she does not see a reason to keep going, what should you do?",
+            "Sarita expresses feelings of wellness hopelessness and mentions she does not see a reason to keep going, what should you do?",
           options: [
             "king ignore the comment & hope they feel better later",
             "Ask directly about the underlying reason.",
@@ -80,7 +80,7 @@ export const quizData = {
         },
         {
           question:
-            "Later that day, in a meeting you see Sarah suddenly breathing rapidly sweating and hypernatural out of anxiety.what among the following can you use to come her down ",
+            "Later that day, in a meeting you see Saritah suddenly breathing rapidly sweating and hypernatural out of anxiety.what among the following can you use to come her down ",
           options: [
             "54321 technique",
             "hydration and posture",
@@ -115,7 +115,7 @@ export const quizData = {
       questions: [
         {
           question:
-            "One day during your busy schedule, you find Sara knocking at your office door and expressing her concern. What will you do?",
+            "One day during your busy schedule, you find Sarita knocking at your office door and expressing her concern. What will you do?",
           options: [
             "Talk to her immediately.", // Correct option
             "You are busy and get back to her later.",
@@ -126,7 +126,7 @@ export const quizData = {
         },
         {
           question:
-            "Now when you and Sarah are talking: Sarah shares that she feels helpless and agitated. What will you respond?",
+            "Now when you and Saritah are talking: Saritah shares that she feels helpless and agitated. What will you respond?",
           options: [
             "You will give advice and share personal experience.",
             "You will listen to them and calm them down.", // Correct option
@@ -137,7 +137,7 @@ export const quizData = {
         },
         {
           question:
-            "Now that you have identified, responded, and communicated about Sarah's mental well-being, you still find her overwhelmed, burnt out, and undergoing frequent outbursts resulting in high absenteeism. What will be your next step?",
+            "Now that you have identified, responded, and communicated about Saritah's mental well-being, you still find her overwhelmed, burnt out, and undergoing frequent outbursts resulting in high absenteeism. What will be your next step?",
           options: [
             "Help them find the best resources.", // Correct option
             "Suggest they take a vacation.",
@@ -159,7 +159,7 @@ export const quizData = {
       questions: [
         {
           question:
-            "You talk to Sarah and she agreed she needs help but does not know where to start. How can you assist?",
+            "You talk to Sarita and she agreed she needs help but does not know where to start. How can you assist?",
           options: [
             "Help them research local mental health professionals like psychologists/licensed counselors/social workers.", // Correct option
             "Ask her to figure it out herself.",
@@ -181,7 +181,7 @@ export const quizData = {
         },
         {
           question:
-            "Sara was brave enough to go ahead with your suggestion. Now you find her more engaged and assume that she is doing better. How will you confirm?",
+            "Sarita was brave enough to go ahead with your suggestion. Now you find her more engaged and assume that she is doing better. How will you confirm?",
           options: [
             "How did the appointment go?", // Correct option
             "Do you feel the support you are receiving is making a difference?", // Correct option

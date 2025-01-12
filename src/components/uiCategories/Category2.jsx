@@ -96,7 +96,7 @@ const Category2 = ({
                 key={index}
                 className={` flex w-full items-center justify-between gap-4 rounded-lg border bg-[#D78859] bg-opacity-90 px-4 py-2 text-white hover:bg-[#f8996d] ${
                   selectedOptions.includes(index)
-                    ? "bg-opselect"
+                    ? "bg-opselect hover:bg-opselect"
                     : "bg-[#D78859]" // Highlight selected option
                 }`}
               >
